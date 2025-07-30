@@ -1,0 +1,945 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background-color: #f8f8f8;
+    overflow-x: hidden;
+}
+
+.logo {
+    width: 60px;
+    height: auto;
+}
+
+/* --- Navbar Styles (Updated) --- */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8rem 2rem;
+  background-color: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 1000; }
+
+/* New containers for better flexbox control */
+.navbar-left, .navbar-right {
+  display: flex;
+  align-items: center;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-item {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.nav-item:hover {
+  color: #4CAF50;
+}
+
+/* Hamburger menu toggle button - hidden on desktop */
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  margin-left: 1rem;
+  z-index: 1001; /* Ensure it's above other elements */
+}
+
+.icon-item {
+    color: #333;
+    font-size: 1.2rem;
+    text-decoration: none;
+}
+
+/* --- Account Dropdown Styles --- */
+/* --- Account Dropdown Styles --- */
+.account-container {
+    position: relative;
+    cursor: pointer;
+}
+
+.account-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #333; /* A visible dark color */
+    padding: 5px 10px;
+    border-radius: 20px;
+    transition: background-color 0.3s;
+}
+
+.account-info:hover {
+    background-color: #f0f0f0;
+}
+
+.user-name {
+    font-weight: 500;
+    font-size: 1rem; /* Ensure it's not zero */
+}
+
+.dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    padding: 8px 0;
+    z-index: 1000;
+    width: 150px;
+}
+/* --- My Orders Page Styles --- */
+.my-orders-container {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 2rem;
+  min-height: 60vh;
+}
+.my-orders-container h1 {
+  margin-bottom: 2rem;
+}
+.orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.order-card {
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+.order-card-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  background: #f7f7f7;
+  border-bottom: 1px solid #e0e0e0;
+  font-size: 0.8rem;
+}
+.order-card-header div {
+  display: flex;
+  flex-direction: column;
+}
+.order-card-label {
+  color: #666;
+  margin-bottom: 4px;
+}
+.order-card-body {
+  padding: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.track-order-btn {
+  background: #4CAF50;
+  color: white !important;
+  padding: 0.75rem 1.5rem;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+/* --- Dropdown Item Style --- */
+.dropdown-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #333;
+  text-decoration: none;
+}
+.dropdown-item:hover {
+  background-color: #f5f5f5;
+}
+
+
+/* --- Order Tracking Page Styles --- */
+.tracking-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 2rem;
+}
+.tracking-container h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.tracking-content {
+  display: flex;
+  gap: 2rem;
+}
+.tracking-details {
+  flex: 1;
+}
+.tracking-map {
+  flex: 1;
+  height: 450px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+.status-tracker {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  margin-bottom: 4rem;
+}
+.status-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+  width: 100px;
+  text-align: center;
+}
+.status-dot {
+  height: 20px;
+  width: 20px;
+  background: #ccc;
+  border-radius: 50%;
+  border: 3px solid white;
+  margin-bottom: 10px;
+  transition: background-color 0.4s;
+}
+.status-step.completed .status-dot {
+  background: #4CAF50;
+}
+.status-line {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  height: 4px;
+  background: #4CAF50;
+  z-index: 1;
+  transition: width 0.4s ease-in-out;
+}
+.order-summary-box {
+  background: #f9f9f9;
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+/* --- My Orders Page Live Status --- */
+.order-card-body > div {
+  flex-grow: 1;
+}
+.live-status {
+  color: #4CAF50;
+  font-weight: bold;
+}
+
+/* --- Order Tracking Page --- */
+.current-status-display {
+  text-align: center;
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+.map-marker-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #333;
+  font-weight: 500;
+  font-size: 0.8rem;
+}
+.delivery-icon {
+  animation: bounce 1s infinite alternate;
+}
+@keyframes bounce {
+  from {
+    transform: translateY(0px);
+  }
+  to {
+    transform: translateY(-5px);
+  }
+}
+
+.logout-btn {
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #333;
+}
+
+.logout-btn:hover {
+    background-color: #f5f5f5;
+}
+
+.login-icon-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    color: #333;
+}
+
+/* --- Hero Section Styles (Home Page) --- */
+.hero-container {
+    width: 100%;
+    position: relative;
+}
+
+.hero-content {
+    position: relative;
+    width: 100%;
+    height: 500px;
+    overflow: hidden;
+}
+
+.hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 3.5rem;
+    font-weight: bold;
+    text-align: center;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+.slider-dots {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+}
+
+.dot {
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+}
+
+.dot.active {
+    background-color: white;
+}
+
+/* --- Color Bands & Menu Highlights (Home Page) --- */
+.color-bands {
+    display: flex;
+    width: 100%;
+}
+
+.band {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem;
+    color: white;
+    text-align: center;
+    height: 150px;
+}
+
+.lime { background-color: #8bc34a; }
+.yellow { background-color: #ffd600; }
+.mint { background-color: #4dd0e1; }
+
+.menu-highlights {
+    padding: 3rem 2rem;
+    text-align: center;
+}
+
+.menu-highlights h2 {
+    margin-bottom: 2rem;
+    color: #333;
+    font-size: 2rem;
+}
+
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.menu-item {
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out !important;
+    transform: translateY(0);
+}
+
+.menu-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.menu-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.menu-item h3 {
+    padding: 1rem 1rem 0.5rem;
+    color: #333;
+}
+
+.menu-item p {
+    padding: 0 1rem;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.price {
+    display: block;
+    padding: 0.5rem 1rem 1rem;
+    color: #8bc34a;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+/* --- Order Page & Shared Menu Styles --- */
+.order-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+}
+
+.order-container h1, .checkout-header h1, .finder-header h1, .app-header h1, .menu-header h1 {
+    font-size: 2.8rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle, .checkout-header p, .finder-header p, .app-header p, .menu-header p {
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 2.5rem;
+}
+
+.order-content {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+}
+
+.menu-selection { flex: 2; }
+.order-summary { flex: 1; }
+
+.menu-selection h2, .order-summary h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    color: #333;
+}
+
+.category-tabs {
+    display: flex;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid #ddd;
+}
+
+.tab-btn {
+    padding: 0.75rem 1.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    color: #666;
+    position: relative;
+    transition: color 0.3s;
+}
+
+.tab-btn.active {
+    color: #4CAF50;
+    font-weight: bold;
+}
+
+.tab-btn.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: #4CAF50;
+}
+
+.order-item {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid #eee;
+}
+
+.order-item img {
+    width: 120px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.item-details { flex: 1; }
+.item-details h3 { margin: 0 0 0.5rem 0; }
+.item-details p { font-size: 0.9rem; color: #666; }
+.item-details .price, .price { font-weight: bold; color: #4CAF50; font-size: 1.2rem; }
+
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.quantity-controls button {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid #ddd;
+    background: white;
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+
+.quantity {
+    min-width: 20px;
+    text-align: center;
+    font-size: 1.1rem;
+}
+
+.order-summary {
+    background: #fdfdfd;
+    padding: 1.5rem;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    position: sticky;
+    top: 2rem;
+}
+
+.summary-items { max-height: 300px; overflow-y: auto; }
+.summary-item { display: flex; justify-content: space-between; padding: 0.75rem 0; }
+.empty-message { text-align: center; padding: 2rem 0; color: #999; }
+.summary-totals { border-top: 1px solid #eee; padding-top: 1.5rem; }
+.total-row { display: flex; justify-content: space-between; margin-bottom: 1rem; }
+.grand-total { font-weight: bold; font-size: 1.2rem; }
+
+.checkout-btn {
+    display: block;
+    width: 100%;
+    padding: 1rem;
+    background: #4CAF50;
+    color: white !important;
+    border-radius: 6px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none; /* Removes underline */
+    transition: background 0.3s;
+}
+
+.checkout-btn:hover { background: #45a049; }
+.checkout-btn.disabled { background: #ccc; cursor: not-allowed; pointer-events: none; }
+
+/* --- Fancy Cafe Menu Page Styles --- */
+.cafe-menu-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+    text-align: center;
+}
+
+.fancy-menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.fancy-menu-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    text-align: left;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.fancy-menu-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+}
+
+.card-image { width: 100%; height: 200px; object-fit: cover; }
+.card-body { padding: 1.5rem; }
+.card-body h3 { font-size: 1.4rem; margin-bottom: 0.5rem; }
+.card-body p { min-height: 40px; margin-bottom: 1.5rem; }
+.card-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #eee; padding-top: 1rem; }
+
+/* --- Cafe Finder Page Styles --- */
+.finder-container { max-width: 1400px; margin: 2rem auto; padding: 0 2rem; }
+.finder-header { text-align: center; margin-bottom: 3rem; }
+.finder-content { display: flex; gap: 2rem; height: 600px; }
+.location-list { flex: 1; overflow-y: auto; padding-right: 1rem; }
+.map-container { flex: 2; border-radius: 12px; overflow: hidden; box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
+.location-card { display: flex; gap: 1rem; padding: 1rem; margin-bottom: 1rem; border-radius: 12px; cursor: pointer; border: 1px solid #eee; transition: all 0.3s; }
+.location-card:hover { background-color: #f9f9f9; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+.location-card.active { background-color: #e8f5e9; border-color: #4CAF50; }
+.location-image { width: 100px; height: 80px; object-fit: cover; border-radius: 8px; }
+.map-marker { cursor: pointer; }
+
+/* --- Mobile App Page Styles --- */
+.mobile-app-container { max-width: 1200px; margin: 2rem auto; padding: 2rem; min-height: 80vh; }
+.app-header { text-align: center; margin-bottom: 4rem; }
+.app-download-section { display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; }
+.app-card { background: #ffffff; border-radius: 15px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); display: flex; align-items: center; gap: 2rem; padding: 2.5rem; max-width: 500px; }
+.qr-code-container { padding: 1rem; background: white; border-radius: 10px; box-shadow: 0 0 15px rgba(0,0,0,0.1); }
+.app-info h2 { font-size: 1.8rem; margin-bottom: 1rem; }
+.android-card h2 { color: #4CAF50; }
+.ios-card h2 { color: #007aff; }
+.store-button img { width: 162px; height: auto; transition: transform 0.2s; }
+.store-button:hover img { transform: scale(1.05); }
+
+/* --- Checkout Page Styles --- */
+.checkout-container { max-width: 1200px; margin: 2rem auto; padding: 0 2rem; }
+.checkout-header { text-align: center; margin-bottom: 3rem; }
+.checkout-content { display: flex; gap: 3rem; align-items: flex-start; }
+.checkout-details { flex: 2; }
+.checkout-summary { flex: 1; }
+.checkout-section { background: white; padding: 2rem; border-radius: 12px; margin-bottom: 2rem; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+.checkout-section h2 { margin-bottom: 1.5rem; border-bottom: 1px solid #eee; padding-bottom: 1rem; }
+.checkout-details input[type="text"] { width: 100%; padding: 12px; margin-bottom: 1rem; border: 1px solid #ddd; border-radius: 6px; }
+.payment-options label { display: block; background: #f9f9f9; padding: 1rem; border-radius: 6px; margin-bottom: 0.5rem; cursor: pointer; border: 1px solid #eee; }
+.payment-options label.active { background-color: #e8f5e9; border-color: #4CAF50; font-weight: bold; }
+.payment-options input[type="radio"] { margin-right: 10px; }
+.place-order-btn { width: 100%; padding: 1rem; background: #4CAF50; color: white; border: none; border-radius: 6px; font-size: 1.1rem; font-weight: bold; cursor: pointer; }
+.payment-details-content { margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid #eee; }
+.checkout-qr { display: flex; justify-content: center; margin: 1rem 0; }
+.card-details-row { display: flex; gap: 1rem; }
+.card-details-row input { flex: 1; }
+
+/* --- Modal, Notification & Confirmation Styles --- */
+.modal { display: flex; justify-content: center; align-items: center; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6); }
+.modal-content { background: white; padding: 30px; width: 90%; max-width: 450px; border-radius: 10px; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3); position: relative; text-align: center; }
+.close-button { position: absolute; right: 20px; top: 15px; color: #888; font-size: 28px; cursor: pointer; }
+.modal-content h2 { color: #333; }
+.error-message { color: #e53935; font-size: 0.8rem; text-align: left; }
+.submit-btn { width: 100%; padding: 12px; background-color: #4CAF50; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; }
+.notification-toast, .add-to-cart-notification { position: fixed; left: 50%; transform: translateX(-50%); padding: 12px 25px; border-radius: 25px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); z-index: 3000; color: white; }
+.notification-toast { bottom: 20px; background-color: #333; }
+.add-to-cart-notification { top: 20px; background-color: #28a745; }
+.confirmation-card { background: white; padding: 3rem; border-radius: 15px; text-align: center; max-width: 450px; }
+.confirmation-icon { width: 80px; height: 80px; line-height: 80px; border-radius: 50%; background: #4CAF50; color: white; font-size: 3rem; margin: 0 auto 1.5rem; }
+.order-number { background: #f5f5f5; padding: 0.5rem 1rem; border-radius: 6px; display: inline-block; margin-top: 1rem; }
+.close-confirmation-btn { padding: 0.8rem 2rem; margin-top: 2rem; background: #333; color: white; border: none; border-radius: 6px; cursor: pointer; }
+
+/* --- Footer Styles --- */
+.footer { background-color: #333; color: #ccc; padding: 3rem 2rem; }
+.footer-content { display: flex; flex-wrap: wrap; justify-content: space-between; max-width: 1200px; margin: 0 auto; gap: 2rem; }
+.footer-section { flex: 1; min-width: 220px; }
+.footer-section h3 { color: white; margin-bottom: 1.5rem; font-size: 1.2rem; }
+.footer-section p { margin-bottom: 0.5rem; line-height: 1.6; }
+.footer-section ul { list-style: none; padding: 0; }
+.footer-section li { margin-bottom: 0.75rem; }
+.footer-section a { color: #ccc; text-decoration: none; transition: color 0.3s; }
+.footer-section a:hover { color: #8bc34a; }
+.social-icons { display: flex; gap: 1rem; }
+.social-icon { color: white; font-size: 1.2rem; transition: color 0.3s; }
+.social-icon:hover { color: #8bc34a; }
+
+/* --- Authentication Modal Styles (New) --- */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.auth-modal-content {
+    background-color: #FE6464; /* Coral red background */
+    color: white;
+    padding: 2.5rem;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 420px;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    text-align: center;
+}
+
+.auth-close-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.auth-header h2 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.auth-header p {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+}
+
+.auth-form .form-group {
+    margin-bottom: 1.25rem;
+}
+
+.auth-form input {
+    width: 100%;
+    padding: 1rem;
+    border: none;
+    border-radius: 30px; /* Fully rounded corners */
+    font-size: 1rem;
+    outline: none;
+}
+
+/* Specific styling for the phone input with country code */
+.phone-group {
+    display: flex;
+    background-color: white;
+    border-radius: 30px;
+    align-items: center;
+    padding-left: 1rem;
+}
+
+.phone-group .country-code {
+    color: #333;
+    font-weight: bold;
+    padding-right: 0.5rem;
+    border-right: 1px solid #ddd;
+    margin-right: 0.5rem;
+}
+
+.phone-group input {
+    flex: 1;
+    padding-left: 0.5rem; /* Adjust padding for the input part */
+}
+
+.auth-error-message {
+    color: #ffdddd;
+    background-color: rgba(0,0,0,0.2);
+    padding: 0.5rem;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
+
+.auth-submit-btn {
+    width: 100%;
+    padding: 1rem;
+    border: none;
+    border-radius: 30px;
+    background-color: white;
+    color: #FE6464;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s;
+    margin-top: 1rem;
+}
+
+.auth-submit-btn:hover {
+    transform: scale(1.03);
+}
+
+.auth-submit-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.auth-footer {
+    margin-top: 2rem;
+}
+
+.auth-footer p {
+    font-size: 1rem;
+}
+
+.auth-footer a {
+    color: white;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+/* =========================================== */
+/* --- Responsive Styles (For All Devices) --- */
+/* =========================================== */
+
+/* --- For Tablets and Smaller Devices (max-width: 992px) --- */
+@media (max-width: 992px) {
+  .navbar {
+    padding: 0.8rem 1.5rem;
+  }
+
+  /* --- Hamburger Menu Activation --- */
+  .nav-links {
+    display: none; /* Hide links by default */
+    flex-direction: column;
+    position: absolute;
+    top: 70px; /* Position below the navbar */
+    left: 0;
+    width: 100%;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    padding: 1rem 0;
+    z-index: 999;
+  }
+
+  .nav-links.open {
+    display: flex; /* Show the menu when toggled */
+    align-items: center;
+  }
+
+  .nav-item {
+    padding: 0.75rem 0;
+    width: 100%;
+    text-align: center;
+  }
+
+  .menu-toggle {
+    display: block; /* Show the hamburger icon */
+  }
+
+  /* --- General Layout Stacking --- */
+  .order-content,
+  .checkout-content,
+  .finder-content,
+  .app-download-section,
+  .tracking-content {
+    flex-direction: column;
+  }
+
+  .order-summary,
+  .checkout-summary {
+    position: static;
+    width: 100%;
+    margin-top: 2rem;
+  }
+}
+
+/* --- For Mobile Phones (max-width: 768px) --- */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0.8rem 1rem;
+  }
+
+  .user-name {
+    display: none; /* Hide username on small screens to save space */
+  }
+
+  /* --- General Font & Layout Adjustments --- */
+  h1, .hero-text {
+    font-size: 2.2rem !important;
+  }
+
+  h2 {
+    font-size: 1.6rem !important;
+  }
+  
+  .order-container, .checkout-container, .finder-container, .mobile-app-container, .cafe-menu-container, .my-orders-container, .tracking-container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-top: 1rem;
+  }
+
+  /* --- Home Page --- */
+  .color-bands {
+    flex-direction: column;
+  }
+  .band {
+    height: auto;
+    padding: 1.5rem 1rem;
+  }
+  .menu-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* --- Menu & Order Pages --- */
+  .fancy-menu-grid {
+    grid-template-columns: 1fr;
+  }
+  .order-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  .order-item img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+  }
+  .quantity-controls {
+    align-self: flex-end;
+  }
+  
+  /* --- Cafe Finder --- */
+  .finder-content {
+    height: auto; /* Allow height to adjust */
+  }
+  .location-list {
+    height: 300px; /* Set a fixed height for scrolling */
+  }
+  .map-container {
+    height: 400px;
+  }
+  
+  /* --- Mobile App Page --- */
+  .app-card {
+    flex-direction: column;
+    text-align: center;
+    padding: 1.5rem;
+  }
+
+  /* --- Footer --- */
+  .footer-content {
+    flex-direction: column;
+    text-align: center;
+  }
+  .social-icons {
+    justify-content: center;
+  }
+}
