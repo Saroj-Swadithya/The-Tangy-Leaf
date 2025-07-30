@@ -52,7 +52,11 @@ try {
   console.error("❌ Error loading /api/payment:", err.stack);
 }
 
-// Serve React frontend if build exists
+app.get('/api/get-razorpay-key', (req, res) => {
+  res.json({ key: process.env.RAZORPAY_KEY_ID });
+});
+
+// Serve frontend build if it exists
 const indexHtmlPath = path.join(__dirname, '../frontend/build/index.html');
 
 if (fs.existsSync(indexHtmlPath)) {

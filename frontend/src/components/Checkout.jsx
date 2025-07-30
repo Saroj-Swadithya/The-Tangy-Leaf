@@ -33,62 +33,64 @@ const Checkout = ({ user, onLogout, onLoginClick, cart, handleQuantityChange }) 
   const totalInPaisa = Math.round(total * 100);
 
   const handlePayment = async () => {
-    if (!user) {
-      alert("Please log in to place an order.");
-      return;
-    }
-    setIsProcessing(true);
+  if (!user) {
+    alert("Please log in to place an order.");
+    return;
+  }
+  setIsProcessing(true);
 
-    try {
-      // --- FIX: Use a relative URL ---
-      const orderResponse = await axios.post('/api/payment/razorpay-order', {
-        amount: totalInPaisa,
-        currency: 'INR',
-      });
-      const razorpayOrder = orderResponse.data;
+  try {
+    // ✅ Get Razorpay Key from backend
+    const { data: keyData } = await axios.get('/api/get-razorpay-key');
 
-      const options = {
-        key: process.env.REACT_APP_RAZORPAY_KEY_ID,
-        amount: razorpayOrder.amount,
-        currency: razorpayOrder.currency,
-        name: 'The Tangy Leaf',
-        description: 'Order Payment',
-        order_id: razorpayOrder.id,
-        handler: async function (response) {
-          const orderDetails = {
-            items: cart.map(item => ({ name: item.name, quantity: item.quantity, price: item.price })),
-            totalAmount: total,
-            deliveryAddress: address,
-            paymentMethod: 'Razorpay',
-            paymentStatus: 'Paid',
-            razorpayPaymentId: response.razorpay_payment_id,
-          };
-          
-          // --- FIX: Use a relative URL ---
-          const dbResponse = await axios.post('/api/orders/create', orderDetails);
-          setOrderId(dbResponse.data._id.slice(-6).toUpperCase());
-          setShowConfirmation(true);
-        },
-        prefill: {
-          name: user.name,
-          email: user.email,
-          contact: user.phone,
-        },
-        theme: {
-          color: '#4CAF50',
-        },
-      };
+    // ✅ Create Razorpay order from backend
+    const orderResponse = await axios.post('/api/payment/razorpay-order', {
+      amount: totalInPaisa,
+      currency: 'INR',
+    });
+    const razorpayOrder = orderResponse.data;
 
-      const paymentObject = new window.Razorpay(options);
-      paymentObject.open();
+    const options = {
+      key: keyData.key, // ✅ Use dynamically fetched key
+      amount: razorpayOrder.amount,
+      currency: razorpayOrder.currency,
+      name: 'The Tangy Leaf',
+      description: 'Order Payment',
+      order_id: razorpayOrder.id,
+      handler: async function (response) {
+        const orderDetails = {
+          items: cart.map(item => ({ name: item.name, quantity: item.quantity, price: item.price })),
+          totalAmount: total,
+          deliveryAddress: address,
+          paymentMethod: 'Razorpay',
+          paymentStatus: 'Paid',
+          razorpayPaymentId: response.razorpay_payment_id,
+        };
 
-    } catch (err) {
-      console.error("Payment failed:", err);
-      alert("There was an error processing your payment. Please try again.");
-    } finally {
-      setIsProcessing(false);
-    }
-  };
+        const dbResponse = await axios.post('/api/orders/create', orderDetails);
+        setOrderId(dbResponse.data._id.slice(-6).toUpperCase());
+        setShowConfirmation(true);
+      },
+      prefill: {
+        name: user.name,
+        email: user.email,
+        contact: user.phone,
+      },
+      theme: {
+        color: '#4CAF50',
+      },
+    };
+
+    const paymentObject = new window.Razorpay(options);
+    paymentObject.open();
+
+  } catch (err) {
+    console.error("Payment failed:", err);
+    alert("There was an error processing your payment. Please try again.");
+  } finally {
+    setIsProcessing(false);
+  }
+};
 
   const closeConfirmation = () => {
     setShowConfirmation(false);
