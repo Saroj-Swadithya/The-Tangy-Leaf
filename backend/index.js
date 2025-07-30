@@ -28,7 +28,6 @@ try {
   console.error("❌ Error loading /api/chat:", err.stack);
 }
 
-
 try {
   console.log("Loading /api/auth");
   app.use('/api/auth', require('./routes/auth'));
@@ -36,7 +35,6 @@ try {
 } catch (err) {
   console.error("❌ Error loading /api/auth:", err.stack);
 }
-
 
 try {
   console.log("Loading /api/orders");
@@ -46,7 +44,6 @@ try {
   console.error("❌ Error loading /api/orders:", err.stack);
 }
 
-
 try {
   console.log("Loading /api/payment");
   app.use('/api/payment', require('./routes/payment'));
@@ -55,9 +52,19 @@ try {
   console.error("❌ Error loading /api/payment:", err.stack);
 }
 
-app.get(/^\/(?!api).*/, (req, res) => {
-  res.sendFile(indexHtmlPath);
-});
+// Serve React frontend if build exists
+const indexHtmlPath = path.join(__dirname, '../frontend/build/index.html');
+
+if (fs.existsSync(indexHtmlPath)) {
+  console.warn("✅ Frontend build found. Enabling static file serving.");
+  app.use(express.static(path.join(__dirname, '../frontend/build')));
+
+  app.get(/^\/(?!api).*/, (req, res) => {
+    res.sendFile(indexHtmlPath);
+  });
+} else {
+  console.warn("⚠️  Frontend route disabled in development. React build not found or not needed.");
+}
 
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => {
